@@ -11,15 +11,12 @@ export const login = async (req: FastifyRequest, reply: FastifyReply): Promise<F
     const { email, password } = validateData<ILogin>(LoginSchema, req.body);
     const user = await authService.login(email, password);
     if (user) {
-        const token = application.jwt.sign(
-            {
-                _id: user._id,
-                username: user.username,
-                name: user.name,
-                email: user.email,
-            },
-            { expiresIn: '2h' },
-        );
+        const token = application.jwt.sign({
+            _id: user._id,
+            username: user.username,
+            name: user.name,
+            email: user.email,
+        });
         return reply.send({ token });
     }
 };

@@ -8,7 +8,10 @@ import { middlewares, errorHandler } from '@infrastructure/api/middlewares';
 import { initRoutes } from '@infrastructure/api/routers';
 import fastifyJWT from 'fastify-jwt';
 import fp from 'fastify-plugin';
-import { SECRET_KEY } from '@util';
+import { PREFIX, SECRET_KEY } from '@util';
+import { swagger_config } from './swagger';
+import fastifySwagger from 'fastify-swagger';
+import { UnauthorizedException } from '@domain/exceptions';
 
 export const application = fastify();
 
@@ -20,7 +23,7 @@ const validateToken: FastifyPluginAsync = async (fastify: FastifyInstance) => {
             try {
                 await request.jwtVerify();
             } catch (err) {
-                reply.send(err);
+                reply.send(new UnauthorizedException(err.message));
             }
         });
     } catch (error) {
@@ -33,5 +36,8 @@ middlewares(application);
 errorHandler(application);
 application.register(fp(validateToken));
 
+//swagger
+application.register(fastifySwagger, swagger_config);
+
 // routes
-application.register(initRoutes, { prefix: `/api/v1` });
+application.register(initRoutes, { prefix: PREFIX });

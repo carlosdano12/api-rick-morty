@@ -25,6 +25,15 @@ export class MongoUserRepository implements UserRepository {
         await this.mongo.collection(this.collection).updateOne(query, { $addToSet: { friends: friendId } });
     }
 
+    async searchFriend(id: ObjectId | string, friendId: string): Promise<UserEntity | null> {
+        return this.mongo.collection<UserEntity>(this.collection).findOne({ _id: new ObjectId(id), friends: friendId });
+    }
+
+    async removeFriend(id: ObjectId | string, friendId: string): Promise<void> {
+        const query = { _id: new ObjectId(id) };
+        await this.mongo.collection(this.collection).updateOne(query, { $pull: { friends: friendId } });
+    }
+
     async getAllPagination({ page = 1, limit = 5, search }: IUserPagination): Promise<IUserDataOut> {
         const filter = search
             ? { $or: [{ username: { $regex: `.*${search}.*` } }, { email: { $regex: `.*${search}.*` } }] }

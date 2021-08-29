@@ -28,6 +28,12 @@ export class NotFoundException extends Exception {
     }
 }
 
+export class UnauthorizedException extends Exception {
+    constructor(message: string) {
+        super(message, ErrorCode.UNAUTHORIZED, StatusCode.UNAUTHORIZED);
+    }
+}
+
 export class BadMessageException extends Exception {
     constructor(cause: string) {
         const message = 'Los datos de entrada no corresponden con el esquema definido';

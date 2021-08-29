@@ -3,13 +3,7 @@ import { TYPES, DEPENDENCY_CONTAINER } from '@configuration';
 import { UserRepository } from '@domain/repository';
 import { UserEntity } from '@domain/entities';
 import { Result, Response } from '@domain/response';
-import {
-    IRegisterDataIn,
-    IUserCharacterDataIn,
-    IUserDataOut,
-    IUserDataUpdate,
-    IUserPagination,
-} from '@application/data';
+import { IRegisterDataIn, IUserDataOut, IUserDataUpdate, IUserPagination } from '@application/data';
 import * as bcrypt from 'bcrypt';
 import { BadRequestException, NotFoundException } from '@domain/exceptions';
 import { CharacterAppService } from './CharacterAppService';
@@ -51,10 +45,16 @@ export class UserAppService {
     }
 
     async addFriend(id: ObjectId, friendId: string): Promise<void> {
+        const user = await this.userRepository.searchFriend(id, friendId);
+        if (user) throw new BadRequestException('Este amigo ya fue agregado');
         await this.userRepository.addFriend(id, friendId);
     }
 
-    async selectCharacter({ id, characterId }: IUserCharacterDataIn): Promise<Response<string | null> | undefined> {
+    async removeFriend(id: ObjectId, friendId: string): Promise<void> {
+        await this.userRepository.removeFriend(id, friendId);
+    }
+
+    async selectCharacter(id: ObjectId, characterId: number): Promise<Response<string | null> | undefined> {
         const user = await this.userRepository.getOne(id);
         if (!user) throw new NotFoundException('No se encontró el usuario');
 

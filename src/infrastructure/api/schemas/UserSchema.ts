@@ -1,4 +1,4 @@
-import { IUserAddFriend, IUserCharacterDataIn, IUserDataIn, IUserDataUpdate, IUserPagination } from '@application/data';
+import { IUserFriend, IUserCharacterDataIn, IUserDataIn, IUserDataUpdate, IUserPagination } from '@application/data';
 import Joi from 'joi';
 
 export const UserDataInSchema = Joi.object<IUserDataIn>({
@@ -6,7 +6,6 @@ export const UserDataInSchema = Joi.object<IUserDataIn>({
 });
 
 export const UserCharacteSchema = Joi.object<IUserCharacterDataIn>({
-    id: Joi.string().required(),
     characterId: Joi.number().required(),
 });
 
@@ -22,6 +21,6 @@ export const UserUpdateSchema = Joi.object<IUserDataUpdate>({
     lastName: Joi.string().allow('').optional(),
 });
 
-export const UserAddFriendSchema = Joi.object<IUserAddFriend>({
+export const UserFriendSchema = Joi.object<IUserFriend>({
     friendId: Joi.string().required(),
 });

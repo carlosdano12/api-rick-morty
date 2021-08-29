@@ -2,13 +2,13 @@ export interface IUserDataIn {
     id: string;
 }
 
-export interface IUserCharacterDataIn extends IUserDataIn {
+export interface IUserCharacterDataIn {
     characterId: number;
 }
 
 export interface IUserPagination {
-    page: number;
-    limit: number;
+    page?: number;
+    limit?: number;
     search?: string;
 }
 
@@ -18,6 +18,6 @@ export interface IUserDataUpdate {
     lastName?: string;
 }
 
-export interface IUserAddFriend {
+export interface IUserFriend {
     friendId: string;
 }
