@@ -1,3 +1,4 @@
+[![Board Status](https://dev.azure.com/carlosdano120234/c29e3ff7-57bf-42c9-9c33-7398044af7f3/18e63e8d-0773-4488-970f-27ed31e30997/_apis/work/boardbadge/56a711fd-1cd0-463b-8d41-dd790a5b56ef)](https://dev.azure.com/carlosdano120234/c29e3ff7-57bf-42c9-9c33-7398044af7f3/_boards/board/t/18e63e8d-0773-4488-970f-27ed31e30997/Microsoft.RequirementCategory)
 ## Estructura del proyecto
 
 ```
